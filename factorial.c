@@ -14,19 +14,23 @@
  * is 8 bytes, the results of the function for
  * any n greater than 20 are undefined.
  */
-long factorial(int n) {
+long factorial(int n)
+{
   long result = 1;
-  for (int i = n; i >= 0; i--) {
+  for (int i = n; i > 1; i--)
+  {
     result = result * i;
   }
   return result;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   argc--;
   argv++;
 
-  if (argc != 1) {
+  if (argc != 1)
+  {
     fprintf(stderr, "Error: expected 1 command-line argument (an INT), but got %d\n", argc);
     exit(1);
   }
@@ -38,22 +42,30 @@ int main(int argc, char **argv) {
   long n = strtol(argv[0], &end, 10);
   int res_errno = errno;
 
-  if (end == argv[0]) {
+  if (end == argv[0])
+  {
     fprintf(stderr, "Error: couldn't interpret '%s' as a number\n", argv[0]);
     exit(1);
-  } else if (res_errno == ERANGE) {
+  }
+  else if (res_errno == ERANGE)
+  {
     fprintf(stderr, "Error: '%s' is outside the range of numbers we can handle\n", argv[0]);
     exit(1);
-  } else if (n > INT_MAX) {
+  }
+  else if (n > INT_MAX)
+  {
     fprintf(stderr, "Error: '%s' is too big to fit in an int\n", argv[0]);
     exit(1);
-  } else if (n < 0) {
+  }
+  else if (n < 0)
+  {
     fprintf(stderr, "Error: invalid value %ld:"
-            "factorial can only be calculated for non-negative numbers\n", n);
+                    "factorial can only be calculated for non-negative numbers\n",
+            n);
     exit(1);
   }
 
-  int nn = (short) n;
+  int nn = (short)n;
   long result = factorial(nn);
   printf("factorial(%d) is %ld\n", nn, result);
 }
